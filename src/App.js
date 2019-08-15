@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import Header from './Header';
+import Main from './Main';
+import Footer from './Footer';
+import { Switch, Route } from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleScrollLinkClick = this.handleScrollLinkClick.bind(this);
+
+    this.state = {
+      scrollLinkClicked: 'home'
+    };
+  }
+
+  handleScrollLinkClick(target) {
+    this.setState({
+      scrollLinkClicked: target
+    });
+  }
+
+  render() {
+    return (
+      <React.Fragment>
+        <Header handleScrollLinkClick={this.handleScrollLinkClick} />
+        <Switch>
+          <Route exact path='/' component={() => <Main scrollLinkClicked={this.state.scrollLinkClicked} />} />
+        </Switch>
+        <Footer />
+      </React.Fragment>
+    );
+  }
 }
 
 export default App;
